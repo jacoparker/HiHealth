@@ -42,8 +42,8 @@ public class CalendarActivity extends MainActivity implements NavigationView.OnN
         onCreateDrawer();
 
         View header = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView)header.findViewById(R.id.username);
-        //navUsername.setText(User.getName());
+        TextView navUsername = (TextView)header.findViewById(R.id.username_nav);
+        navUsername.setText(User.getName());
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

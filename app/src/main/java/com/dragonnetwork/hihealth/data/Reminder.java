@@ -5,14 +5,15 @@ import com.google.firebase.Timestamp;
 public class Reminder {
     private String Info;
     private String Instructions;
-    private Timestamp time;
+    private int Time; // 0 - morning 1 - noon 2 - night
+    private int Type;
 
-    public Reminder(String info, String instructions, Timestamp time) {
+    public Reminder(String info, String instructions, int time, int type) {
         Info = info;
         Instructions = instructions;
-        this.time = time;
+        Time = time;
+        Type = type;
     }
-
     public String getInfo() {
         return Info;
     }
@@ -29,11 +30,19 @@ public class Reminder {
         Instructions = instructions;
     }
 
-    public Timestamp getTime() {
-        return time;
+    public int getTime() {
+        return Time;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setTime(int time) {
+        Time = time;
+    }
+
+    public int getType() {
+        return Type;
+    }
+
+    public void setType(int type) {
+        Type = type;
     }
 }
