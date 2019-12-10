@@ -21,6 +21,31 @@ public class User {
     private static String Symptoms;
     private static List<Reminder> morning;
     private static List<Reminder> noon;
+
+    public static List<Reminder> getMorning() {
+        return morning;
+    }
+
+    public static void setMorning(List<Reminder> morning) {
+        User.morning = morning;
+    }
+
+    public static List<Reminder> getNoon() {
+        return noon;
+    }
+
+    public static void setNoon(List<Reminder> noon) {
+        User.noon = noon;
+    }
+
+    public static List<Reminder> getNight() {
+        return night;
+    }
+
+    public static void setNight(List<Reminder> night) {
+        User.night = night;
+    }
+
     private static List<Reminder> night;
 
     public static List<String> getAppointmentIDs() {
