@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dragonnetwork.hihealth.CalendarActivity;
 import com.dragonnetwork.hihealth.MainActivity;
 import com.dragonnetwork.hihealth.ReportsActivity;
+import com.dragonnetwork.hihealth.SymptomsActivity;
 import com.dragonnetwork.hihealth.data.Medication;
 import com.dragonnetwork.hihealth.data.User;
 import com.dragonnetwork.hihealth.medication.AddMedicationActivity;
@@ -116,11 +117,11 @@ public class MedicationActivity extends MainActivity implements NavigationView.O
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 break;
-            case R.id.nav_settings:
-                // must implement settings activity
-                break;
             case R.id.nav_symptoms:
                 // must implement settings activity
+                intent = new Intent(this, SymptomsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 break;
         }
 

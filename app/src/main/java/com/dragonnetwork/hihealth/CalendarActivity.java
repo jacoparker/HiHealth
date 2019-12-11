@@ -95,11 +95,10 @@ public class CalendarActivity extends MainActivity implements NavigationView.OnN
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 break;
-            case R.id.nav_settings:
-                // must implement settings activity
-                break;
             case R.id.nav_symptoms:
-                // must implement settings activity
+                intent = new Intent(this, SymptomsActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 break;
         }
 
