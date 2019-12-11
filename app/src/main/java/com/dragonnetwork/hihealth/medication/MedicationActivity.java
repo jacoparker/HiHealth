@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -59,6 +60,8 @@ public class MedicationActivity extends MainActivity implements NavigationView.O
         onCreateDrawer();
 
         View header = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView)header.findViewById(R.id.username_nav);
+        navUsername.setText(User.getName());
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
