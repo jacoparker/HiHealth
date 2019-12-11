@@ -30,11 +30,10 @@ public class Medication {
     private Timestamp Starttime;
     private int IconType;
 
-    public Medication(String medID, String prescription, String type, int totalNum, String strength, int doses, int frequency,
+    public Medication(String medID, String prescription, int totalNum, String strength, int doses, int frequency,
                       Timestamp starttime, int iconType) {
         MedID = medID;
         Prescription = prescription;
-        Type = type;
         TotalNum = totalNum;
         Strength = strength;
         Doses = doses;
@@ -43,11 +42,10 @@ public class Medication {
         IconType = iconType;
     }
 
-    public Medication(String medID, String prescription, String type, int totalNum, String strength, int doses, int frequency,
+    public Medication(String medID, String prescription, int totalNum, String strength, int doses, int frequency,
                       Timestamp starttime) {
         MedID = medID;
         Prescription = prescription;
-        Type = type;
         TotalNum = totalNum;
         Strength = strength;
         Doses = doses;
@@ -56,10 +54,9 @@ public class Medication {
         IconType = 0;
     }
 
-    public Medication(String medID, String prescription, String type, int totalNum, String strength, int doses, int frequency) {
+    public Medication(String medID, String prescription, int totalNum, String strength, int doses, int frequency) {
         this.MedID = medID;
         this.Prescription = prescription;
-        this.Type = type;
         this.TotalNum = totalNum;
         this.Strength = strength;
         this.Doses = doses;
@@ -82,14 +79,6 @@ public class Medication {
 
     public void setPrescription(String prescription) {
         Prescription = prescription;
-    }
-
-    public String getType() {
-        return Type;
-    }
-
-    public void setType(String type) {
-        Type = type;
     }
 
     public int getTotalNum() {

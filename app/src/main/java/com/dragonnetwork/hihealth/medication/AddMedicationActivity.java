@@ -32,7 +32,6 @@ import javax.annotation.Nullable;
 
 public class AddMedicationActivity extends AppCompatActivity {
     EditText MedicationName;
-    EditText MedicationType;
     EditText TotalPills;
     EditText Strength;
     EditText Dosage;
@@ -51,7 +50,6 @@ public class AddMedicationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_medication);
         LinearLayoutManager layout = new LinearLayoutManager(this);
         MedicationName = findViewById(R.id.medication_name_editText);
-        MedicationType = findViewById(R.id.medication_type_editText);
         TotalPills = findViewById(R.id.total_pills_editText);
         Strength = findViewById(R.id.medication_strength_editText);
         Dosage = findViewById(R.id.medication_dosage_editText);
@@ -88,7 +86,6 @@ public class AddMedicationActivity extends AppCompatActivity {
                         if (frequencyEvening.isChecked())
                             frequency += 4;
                         User.addMedication(MedicationName.getText().toString(),
-                                MedicationType.getText().toString(),
                                 Integer.parseInt(TotalPills.getText().toString()),
                                 Strength.getText().toString(),
                                 Integer.parseInt(Dosage.getText().toString()),
@@ -128,15 +125,6 @@ public class AddMedicationActivity extends AppCompatActivity {
         }
         else{
             MedicationName.setError(null);
-        }
-
-        if(TextUtils.isEmpty(MedicationType.getText().toString()))
-        {
-            MedicationType.setError("Required");
-            valid = false;
-        }
-        else{
-            MedicationType.setError(null);
         }
 
         if(TextUtils.isEmpty(TotalPills.getText().toString()))

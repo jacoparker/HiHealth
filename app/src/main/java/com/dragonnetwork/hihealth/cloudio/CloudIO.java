@@ -70,7 +70,6 @@ public class CloudIO {
     public static void updateMedication(Medication newmedicatgion){
         Map<String, Object> medication = new HashMap<>();
         medication.put("Prescription", newmedicatgion.getPrescription());
-        medication.put("Type",newmedicatgion.getType());
         medication.put("TotalNum",newmedicatgion.getTotalNum());
         medication.put("Strength", newmedicatgion.getStrength());
         medication.put("Doses", newmedicatgion.getDoses());
@@ -92,7 +91,7 @@ public class CloudIO {
                             DocumentSnapshot MedDoc = task.getResult();
                             if(MedDoc.exists()){
                                 Log.d(TAG,"Medication Document Snapshot data: " + MedDoc.getData());
-                                medications.add(new Medication(MedDoc.getId(),MedDoc.getString("Prescription"), MedDoc.getString("Type"), MedDoc.getDouble("TotalNum").intValue(),
+                                medications.add(new Medication(MedDoc.getId(),MedDoc.getString("Prescription"), MedDoc.getDouble("TotalNum").intValue(),
                                         MedDoc.getString("Strength"), MedDoc.getDouble("Doses").intValue(), MedDoc.getDouble("Frequency").intValue(), MedDoc.getTimestamp("Start"),MedDoc.getDouble("IconType").intValue()));
                             }
                         }
@@ -101,10 +100,9 @@ public class CloudIO {
             }
         return medications;
     }
-    public static void addMedication(final String prescription, final String type, final int totalNum, final String strength, final int doses, final int frequency, final int icontype){
+    public static void addMedication(final String prescription, final int totalNum, final String strength, final int doses, final int frequency, final int icontype){
         Map<String, Object> medication = new HashMap<>();
         medication.put("Prescription", prescription);
-        medication.put("Type",type);
         medication.put("TotalNum",totalNum);
         medication.put("Strength", strength);
         medication.put("Doses", doses);
@@ -116,7 +114,7 @@ public class CloudIO {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Log.d(TAG, "CloudIO add new medication with ID: " + documentReference.getId());
-                User.addMedication(new Medication(documentReference.getId(), prescription, type, totalNum, strength, doses, frequency,time,icontype));
+                User.addMedication(new Medication(documentReference.getId(), prescription, totalNum, strength, doses, frequency,time,icontype));
                 UserDB.document(User.getUID()).update("MedicationIDs", User.getMedicationIDs());
             }
         });

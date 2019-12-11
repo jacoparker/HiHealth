@@ -154,8 +154,8 @@ public class User {
         CloudIO.SignOut();
     }
 
-    public static void addMedication(String prescription, String type, int totalnum, String strength, int doses, int frequency, int icontype){
-        CloudIO.addMedication(prescription, type, totalnum, strength, doses, frequency,icontype);
+    public static void addMedication(String prescription, int totalnum, String strength, int doses, int frequency, int icontype){
+        CloudIO.addMedication(prescription, totalnum, strength, doses, frequency,icontype);
     }
 
     public static void addMedication(Medication medication){
