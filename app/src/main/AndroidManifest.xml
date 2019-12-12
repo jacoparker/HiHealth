@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SymptomsActivity"
-            android:label="Symptoms"/>
+            android:label="Symptoms"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ReportsActivity"
             android:label="Reports"
