@@ -23,30 +23,62 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/colorPrimary"
-            app:title="@string/title_reminders"
+            app:title="@string/title_reports"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <Button
-            android:id="@+id/textPhysician"
-            android:layout_width="155dp"
-            android:layout_height="119dp"
-            android:text="Emergency Text to Physician"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/callPhysician"
-            app:layout_constraintVertical_bias="0.13" />
-
-        <Button
-            android:id="@+id/callPhysician"
-            android:layout_width="155dp"
-            android:layout_height="119dp"
-            android:text="Call Physician"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/report_header"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Monthly Report"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tool_bar"
-            app:layout_constraintVertical_bias="0.266" />
+            app:layout_constraintBottom_toTopOf="@id/reports_recycler_view"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/reports_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/report_header"
+            app:layout_constraintBottom_toTopOf="@id/callPhysician"/>
+        <Button
+            android:id="@+id/textPhysician"
+            android:text="Text Physician"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_darker"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+            android:id="@+id/callPhysician"
+            android:text="Call Physician"
+            app:layout_constraintBottom_toTopOf="@id/textPhysician"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.266"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/button_black"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textColor="@color/white"
+            android:textSize="24sp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
