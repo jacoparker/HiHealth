@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
     android:background="@drawable/backgroundborder"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:paddingBottom="10dp">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -12,8 +14,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:id="@+id/medication_icon"
-        android:src="@drawable/pills"/>
+        android:id="@+id/medication_icon"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

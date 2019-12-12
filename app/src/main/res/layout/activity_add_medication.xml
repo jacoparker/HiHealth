@@ -187,13 +187,14 @@
             android:theme="@style/Theme.MaterialComponents.Light" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <com.google.android.material.chip.ChipGroup
+    <RadioGroup
         android:layout_marginTop="10dp"
         android:id="@+id/medication_icon_selection"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:background="@color/white"
         android:theme="@style/Theme.MaterialComponents.Light"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/medication_frequency_selection">
@@ -219,7 +220,7 @@
             android:layout_height="match_parent"
             android:text="pills"
             android:theme="@style/Theme.MaterialComponents.Light" />
-    </com.google.android.material.chip.ChipGroup>
+    </RadioGroup>
 
     <Button
         android:id="@+id/Addbt"

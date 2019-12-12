@@ -1,9 +1,11 @@
 package com.dragonnetwork.hihealth.medication;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,6 +36,7 @@ public class MedicationAdaptor extends
         // for any view that will be set as you render a row
         public TextView medInfo;
         public TextView medInstructions;
+        public ImageView icon;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -44,6 +47,7 @@ public class MedicationAdaptor extends
 
             medInfo = (TextView) itemView.findViewById(R.id.medication_info);
             medInstructions = (TextView) itemView.findViewById(R.id.medication_instructions);
+            icon = (ImageView) itemView.findViewById(R.id.medication_icon);
         }
     }
 
@@ -77,6 +81,18 @@ public class MedicationAdaptor extends
         medStatus += " pills taken";
         medStatus += " at " + med.getFrequency();
         medInfo.setText(medStatus);
+
+        ImageView icon = viewHolder.icon;
+        switch(med.getIconType()) {
+            case (R.id.syringe_button):
+                icon.setImageResource(R.drawable.syringe);
+                break;
+            case(R.id.inhaler_button):
+                icon.setImageResource(R.drawable.inhaler);
+                break;
+            default:
+                icon.setImageResource(R.drawable.pills);
+        }
     }
 
     // Returns the total count of items in the list

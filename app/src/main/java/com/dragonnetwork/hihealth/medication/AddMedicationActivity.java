@@ -1,6 +1,7 @@
 package com.dragonnetwork.hihealth.medication;
 
 import android.app.ProgressDialog;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -38,10 +41,12 @@ public class AddMedicationActivity extends AppCompatActivity {
     AppCompatCheckBox frequencyMorning;
     AppCompatCheckBox frequencyAfternoon;
     AppCompatCheckBox frequencyEvening;
-    AppCompatRadioButton Icon;
+    RadioGroup Icon;
     Button Addbt;
     final String TAG = "AddMedicationActivity";
     ProgressDialog progressDialog;
+
+    int iconChoice;
 
     private Toolbar toolbar;
 
@@ -56,7 +61,29 @@ public class AddMedicationActivity extends AppCompatActivity {
         frequencyMorning = findViewById(R.id.morning_check);
         frequencyAfternoon = findViewById(R.id.afternoon_check);
         frequencyEvening = findViewById(R.id.evening_check);
-        //Icon = findViewById(R.id.medication_icon_selection);
+        Icon = findViewById(R.id.medication_icon_selection);
+        Icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean checked = ((RadioButton) v).isChecked();
+
+                // Check which radio button was clicked
+                switch(v.getId()) {
+                    case R.id.inhaler_button:
+                        if (checked)
+                            iconChoice = 1;
+                        break;
+                    case R.id.syringe_button:
+                        if (checked)
+                            iconChoice = 2;
+                        break;
+                    case R.id.pills_button:
+                        if (checked)
+                            iconChoice = 3;
+                        break;
+                }
+            }
+        });
         Addbt = findViewById(R.id.Addbt);
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -90,7 +117,7 @@ public class AddMedicationActivity extends AppCompatActivity {
                                 Strength.getText().toString(),
                                 Integer.parseInt(Dosage.getText().toString()),
                                 frequency,
-                                0);
+                                Icon.getCheckedRadioButtonId());
                         progressDialog.dismiss();
                         Addbt.setEnabled(true);
                         Intent intent = new Intent(getApplicationContext(), MedicationActivity.class);
@@ -105,6 +132,27 @@ public class AddMedicationActivity extends AppCompatActivity {
                 }
             });
         }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.syringe_button:
+                if (checked)
+                    this.iconChoice = 1;
+                break;
+            case R.id.inhaler_button:
+                if (checked)
+                    this.iconChoice = 2;
+                    break;
+            case R.id.pills_button:
+                if (checked)
+                    this.iconChoice = 3;
+                    break;
+        }
+    }
 
     public void initProgressDialog(){
         progressDialog = new ProgressDialog(AddMedicationActivity.this,
