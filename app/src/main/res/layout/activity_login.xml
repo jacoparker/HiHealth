@@ -77,22 +77,20 @@
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="347dp"
-        android:layout_height="47dp"
+        android:layout_width="419dp"
+        android:layout_height="68dp"
         android:layout_marginBottom="12dp"
         android:background="@color/colorTertiary"
         android:text="@string/login"
         android:textColor="@color/accent"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/link_signup"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/link_signup"
-        android:layout_width="349dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="415dp"
+        android:layout_height="70dp"
         android:background="@color/colorSecondary"
         android:text="@string/register"
         android:textColor="@color/accent"
