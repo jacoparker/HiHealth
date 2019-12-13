@@ -3,8 +3,8 @@ package com.dragonnetwork.hihealth.data;
 import android.app.Activity;
 
 import com.dragonnetwork.hihealth.cloudio.CloudIO;
+import com.google.firebase.Timestamp;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +23,8 @@ public class User {
     private static String Symptoms;
     private static List<Reminder> morning;
     private static List<Reminder> noon;
+    private static List<Reminder> night;
+    private static List<Reminder> Reminders;
 
     public static List<Reminder> getMorning() {
         return morning;
@@ -48,7 +50,13 @@ public class User {
         User.night = night;
     }
 
-    private static List<Reminder> night;
+    public static List<Reminder> getReminders() {
+        return Reminders;
+    }
+
+    public static void setReminders(List<Reminder> reminders) {
+        Reminders = reminders;
+    }
 
     public static List<String> getAppointmentIDs() {
         return AppointmentIDs;
@@ -150,7 +158,11 @@ public class User {
         DateOfBirth = "";
         Appointments = null;
         MedicationIDs = null;
-        MedicationIDs = null;
+        Medications = null;
+        Reminders = null;
+        morning = null;
+        noon = null;
+        night = null;
         Reports = null;
         Symptoms = null;
         CloudIO.SignOut();
@@ -182,8 +194,10 @@ public class User {
     public static void CreateNewReminders(Medication medication){
 
     }
-    public static void getReminders(List<Medication> medications, Timestamp timestamp){
+    public static void fetchReminders(){
         // Medication.frequency: 1-7 = 1+2+4;
+        Timestamp timestamp = Timestamp.now();
+        List<Medication> medications = getMedications();
         if(morning!=null)
             morning.clear();
         else
@@ -203,14 +217,17 @@ public class User {
             duration=medication.getTotalNum()/medication.getDoses();
             if(frequency >= 4){
                 night.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),2,0));
+                Reminders.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),2,0));
                 frequency-=4;
             }
             if(frequency >= 2){
                 noon.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),1,0));
+                Reminders.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),1,0));
                 frequency-=2;
             }
             if(frequency >= 1){
                 morning.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),1,0));
+                Reminders.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),1,0));
                 frequency-=1;
             }
         }

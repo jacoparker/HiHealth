@@ -80,7 +80,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set layout manager to position the items
         rv_morning.setLayoutManager(new LinearLayoutManager(this));
     }
+    @Override
+    protected  void onStart() {
+        super.onStart();
+        if(User.getMedicationIDs()!=null)
+            User.fetchReminders();
 
+    }
     protected void onCreateDrawer() {
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
