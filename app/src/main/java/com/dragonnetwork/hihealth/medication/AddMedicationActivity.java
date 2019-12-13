@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.dragonnetwork.hihealth.R;
 import com.dragonnetwork.hihealth.data.User;
+import com.dragonnetwork.hihealth.cloudio.CloudIO;
+import com.dragonnetwork.hihealth.data.Medication;
+import com.dragonnetwork.hihealth.data.User;
 
 
 public class AddMedicationActivity extends AppCompatActivity {
