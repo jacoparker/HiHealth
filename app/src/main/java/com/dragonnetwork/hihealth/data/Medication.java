@@ -2,20 +2,31 @@ package com.dragonnetwork.hihealth.data;
 
 
 public class Medication {
+    private String MedID;
     private String Prescription;
     private String Type;
+
+    public String getMedID() {
+        return MedID;
+    }
+
+    public void setMedID(String medID) {
+        MedID = medID;
+    }
+
     private int TotalNum;
     private String Strength;
     private int Doses;
     private String Frequency;
 
-    public Medication(String prescription, String type, int totalNum, String strength, int doses, String frequency) {
-        Prescription = prescription;
-        Type = type;
-        TotalNum = totalNum;
-        Strength = strength;
-        Doses = doses;
-        Frequency = frequency;
+    public Medication(String medID, String prescription, String type, int totalNum, String strength, int doses, String frequency) {
+        this.MedID = medID;
+        this.Prescription = prescription;
+        this.Type = type;
+        this.TotalNum = totalNum;
+        this.Strength = strength;
+        this.Doses = doses;
+        this.Frequency = frequency;
     }
 
     public String getPrescription() {

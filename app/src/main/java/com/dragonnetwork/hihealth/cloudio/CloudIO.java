@@ -11,6 +11,7 @@ import com.dragonnetwork.hihealth.data.User;
 import com.dragonnetwork.hihealth.user.LoginActivity;
 import com.dragonnetwork.hihealth.user.SignupActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +56,7 @@ public class CloudIO {
                         DocumentSnapshot MedDoc = task.getResult();
                         if(MedDoc.exists()){
                             Log.d(TAG,"Medication Document Snapshot data: " + MedDoc.getData());
-                            medications.add(new Medication(MedDoc.getString("Prescription"), MedDoc.getString("Type"), MedDoc.getDouble("TotalNum").intValue(),
+                            medications.add(new Medication(MedDoc.getId(),MedDoc.getString("Prescription"), MedDoc.getString("Type"), MedDoc.getDouble("TotalNum").intValue(),
                                     MedDoc.getString("Strength"), MedDoc.getDouble("Doses").intValue(), MedDoc.getString("Frequency")));
                         }
                     }
@@ -63,6 +64,24 @@ public class CloudIO {
             });
         }
         return medications;
+    }
+    public static void addMedication(final String prescription, final String type, final int totalNum, final String strength, final int doses, final String frequency){
+        Map<String, Object> medication = new HashMap<>();
+        medication.put("Prescription", prescription);
+        medication.put("Type",type);
+        medication.put("TotalNum",totalNum);
+        medication.put("Strength", strength);
+        medication.put("Doses", doses);
+        medication.put("Frequency", frequency);
+        MedicationsDB.add(medication).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d(TAG, "CloudIO add new medication with ID: " + documentReference.getId());
+                User.addMedication(new Medication(documentReference.getId(), prescription, type, totalNum, strength, doses, frequency));
+                UserDB.document(User.getUID()).update("MedicationIDs", User.getMedicationIDs());
+            }
+        });
+
     }
     public static void Login(String email, String password, final LoginActivity context){
         mAuth.signInWithEmailAndPassword(email, password)
@@ -89,8 +108,9 @@ public class CloudIO {
                                             User.setName(UserDoc.getString("Name"));
                                             User.setDateOfBirth(UserDoc.getString("DateOfBirth"));
                                             User.setAppointments((List<String>) UserDoc.get("Appointments"));
-                                            List<String> medIDs = (List<String>) UserDoc.get("Medications");
+                                            List<String> medIDs = (List<String>) UserDoc.get("MedicationIDs");
                                             User.setMedicationIDs((medIDs));
+                                            //TODO: check if medIDs are 0.
                                             User.setMedications(getMedications(medIDs));
                                             User.setReports((List<String>) UserDoc.get("Reports"));
                                             User.setSymptoms((List<Map>) UserDoc.get("Symptoms"));
@@ -135,7 +155,6 @@ public class CloudIO {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             User.setUID(mAuth.getUid());
-
                             User.setEmail(email);
                             User.setName(name);
                             User.setDateOfBirth(dob);
@@ -149,7 +168,7 @@ public class CloudIO {
                             newuser.put("Email", User.getEmail());
                             newuser.put("Name",User.getName());
                             newuser.put("DateOfBirth", User.getDateOfBirth());
-                            newuser.put("Medications", User.getMedications());
+                            newuser.put("MedicationIDs", User.getMedications());
                             newuser.put("Reports", User.getReports());
                             //newuser.put("Sex", User.isSex());
                             newuser.put("Symptoms", User.getSymptoms());
