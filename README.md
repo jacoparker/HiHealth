@@ -26,7 +26,8 @@ Patients, especially those with chronic diseases, need to keep track of their me
 ## Testing
 
 Our tests are under Java/(androidTest).
-The tests are created usin Espresso. All Espresso dependinces were addes to the gradle file.
+The tests are created usin Espresso. 
+All Espresso dependinces were addes to the gradle file.
 However, you still have to download the pluging using Android Studio
 
 ## Design
