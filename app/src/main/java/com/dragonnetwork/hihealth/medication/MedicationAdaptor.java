@@ -81,12 +81,32 @@ public class MedicationAdaptor extends
 
         // Set item views based on your views and data model
         TextView textView = viewHolder.medInfo;
-        textView.setText(med.getPrescription() + " - " + med.getDoses());
+        textView.setText(med.getPrescription() + " - " + med.getStrength() + "/" + med.getTotalNum());
         TextView medInfo = viewHolder.medInstructions;
-        String medStatus = "" + med.getTotalNum();
-//        medStatus += " pills " + med.isMedSkipped() ? "skipped" : "taken";
-        medStatus += " pills taken";
-        medStatus += " at " + med.getFrequency();
+        String medStatus = "" + med.getDoses() + " doses";
+        switch (med.getFrequency()) {
+            case (1):
+                medStatus += " - morning";
+                break;
+            case (2):
+                medStatus += " - afternoon";
+                break;
+            case (3):
+                medStatus += " - morning and afternoon";
+                break;
+            case (4):
+                medStatus += " - evening";
+                break;
+            case (5):
+                medStatus += " - morning and evening";
+                break;
+            case (6):
+                medStatus += " - afternoon and evening";
+                break;
+            case (7):
+                medStatus += " - morning, afternoon and evening";
+                break;
+        }
         medInfo.setText(medStatus);
 
         ImageView icon = viewHolder.icon;
