@@ -5,6 +5,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -25,10 +28,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
 
+import com.dragonnetwork.hihealth.data.Medication;
 import com.dragonnetwork.hihealth.data.User;
 import com.dragonnetwork.hihealth.medication.MedicationActivity;
+import com.dragonnetwork.hihealth.medication.MedicationAdaptor;
 import com.dragonnetwork.hihealth.user.UserProfile;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 
 public class ReportsActivity extends MainActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +43,9 @@ public class ReportsActivity extends MainActivity implements NavigationView.OnNa
     String number = "6086220769"; // temporary
     TextView textView;
     Button button;
+    RecyclerView recyclerView;
+    List<Medication> medList;
+    MedicationAdaptor adaptor;
 
     private Toolbar toolbar;
     protected DrawerLayout drawer;
@@ -53,7 +63,7 @@ public class ReportsActivity extends MainActivity implements NavigationView.OnNa
         onCreateDrawer();
 
         View header = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView)header.findViewById(R.id.username_nav);
+        TextView navUsername = (TextView) header.findViewById(R.id.username_nav);
         navUsername.setText(User.getName());
         header.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +90,7 @@ public class ReportsActivity extends MainActivity implements NavigationView.OnNa
         findViewById(R.id.textPhysician).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendSMS(number,messageToSend);
+                sendSMS(number, messageToSend);
             }
         });
 
@@ -92,6 +102,14 @@ public class ReportsActivity extends MainActivity implements NavigationView.OnNa
         } else {
             Log.d("PLAYGROUND", "Permission is granted");
         }
+
+        // Monthly report
+        medList = User.getMedications();
+        recyclerView = findViewById(R.id.reports_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adaptor = new MedicationAdaptor(this, medList);
+        recyclerView.setAdapter(adaptor);
+
     }
 
     @Override
@@ -157,11 +175,10 @@ public class ReportsActivity extends MainActivity implements NavigationView.OnNa
                 new Intent(DELIVERED), 0);
 
         //---when the SMS has been sent---
-        registerReceiver(new BroadcastReceiver(){
+        registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
-                switch (getResultCode())
-                {
+                switch (getResultCode()) {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS sent",
                                 Toast.LENGTH_SHORT).show();
@@ -187,11 +204,10 @@ public class ReportsActivity extends MainActivity implements NavigationView.OnNa
         }, new IntentFilter(SENT));
 
         //---when the SMS has been delivered---
-        registerReceiver(new BroadcastReceiver(){
+        registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
-                switch (getResultCode())
-                {
+                switch (getResultCode()) {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS delivered",
                                 Toast.LENGTH_SHORT).show();
@@ -207,6 +223,6 @@ public class ReportsActivity extends MainActivity implements NavigationView.OnNa
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
     }
-
-
 }
+
+

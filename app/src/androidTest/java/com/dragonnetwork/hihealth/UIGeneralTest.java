@@ -1,4 +1,4 @@
-package com.dragonnetwork.hihealth.user;
+package com.dragonnetwork.hihealth;
 
 
 import android.view.View;
@@ -12,6 +12,7 @@ import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.dragonnetwork.hihealth.R;
+import com.dragonnetwork.hihealth.user.LoginActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -50,7 +51,7 @@ public class UIGeneralTest {
 
     /*
     This test focuses on the user interface.
-    We are going over all the activities and pages to test all buttons and fields.
+    We are going over all activities and pages to test all buttons and fields.
     Note: Due to a bug at Reports and Symptoms, we could not test these pages.
     The bug is caused after allowing or denying access to SMS. The app crashes
     after choosing the value.
@@ -970,7 +971,7 @@ public class UIGeneralTest {
                         5),
                         isDisplayed()));
         navigationMenuItemView2.perform(click());
-        
+
         // The app crashed here because I tried to access symptopms page
         // TODO: Fix this bug
 
@@ -1093,10 +1094,10 @@ public class UIGeneralTest {
                         3),
                         isDisplayed()));
         navigationMenuItemView3.perform(click());
-        
+
         // The app crashed here because I tried to access Reports page
         // TODO: Fix this bug
-        
+
     }
 
     private static Matcher<View> childAtPosition(

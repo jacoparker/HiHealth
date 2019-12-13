@@ -13,6 +13,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,21 +26,26 @@ import android.widget.Toast;
 
 import com.dragonnetwork.hihealth.cloudio.CloudIO;
 import com.dragonnetwork.hihealth.data.Medication;
+import com.dragonnetwork.hihealth.data.Reminder;
 import com.dragonnetwork.hihealth.data.User;
 import com.dragonnetwork.hihealth.medication.MedicationActivity;
 import com.dragonnetwork.hihealth.medication.MedicationAdaptor;
+import com.dragonnetwork.hihealth.reminder.ReminderAdaptor;
 import com.dragonnetwork.hihealth.user.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     protected DrawerLayout drawer;
     protected ActionBarDrawerToggle drawerToggle;
     protected NavigationView navigationView;
-
+    final String TAG = "MainActivity";
     protected int contentView;
+    ReminderAdaptor adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +77,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        CloudIO.initCloud();
+        //CloudIO.initCloud();
         RecyclerView rv_morning = (RecyclerView) findViewById(R.id.rv_reminders);
 
         ArrayList<Medication> medications = createMedicationsList(6);
-        MedicationAdaptor adapter = new MedicationAdaptor(this.getApplicationContext() , medications);
-        // Attach the adapter to the recyclerview to populate items
+        //MedicationAdaptor adapter = new MedicationAdaptor(this.getApplicationContext() , medications);
+        User.fetchReminders();
+        adapter = new ReminderAdaptor(this.getApplicationContext(),User.getReminders());
+        if(User.getMedicationIDs()!=null)
+            User.fetchReminders();
+        adapter.notifyDataSetChanged();
+        Log.w(TAG,"@@@@@@@@@Reminders: " + User.getReminders());
+            // Attach the adapter to the recyclerview to populate items
         rv_morning.setAdapter(adapter);
         // Set layout manager to position the items
         rv_morning.setLayoutManager(new LinearLayoutManager(this));
     }
-
+    @Override
+    protected  void onStart() {
+        super.onStart();
+        if(User.getMedicationIDs()!=null)
+            User.fetchReminders();
+        adapter.notifyDataSetChanged();
+    }
     protected void onCreateDrawer() {
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
