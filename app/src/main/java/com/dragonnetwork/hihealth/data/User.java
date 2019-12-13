@@ -157,20 +157,22 @@ public class User {
     }
 
     public static void removeMedication(String medID, Activity context) {
-        CloudIO.removeMedication(medID, context);
         for (Medication m: Medications) {
             if (m.getMedID().equals(medID)) {
                 Medications.remove(m);
                 break;
             }
         }
+        CloudIO.removeMedication(medID, context);
     }
 
     public static void addMedication(String prescription, int totalnum, String strength, int doses, int frequency, int icontype){
+        Medications.add(new Medication(null, prescription, totalnum, strength, doses, frequency, null, icontype));
         CloudIO.addMedication(prescription, totalnum, strength, doses, frequency,icontype);
     }
 
     public static void addMedication(Medication medication){
+        Medications.remove(Medications.size()-1);
         Medications.add(medication);
         MedicationIDs.add(medication.getMedID());
     }

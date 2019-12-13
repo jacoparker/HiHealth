@@ -1,5 +1,6 @@
 package com.dragonnetwork.hihealth.medication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -38,10 +39,12 @@ import java.util.List;
 
 public class MedicationActivity extends MainActivity implements NavigationView.OnNavigationItemSelectedListener{
     final String TAG = "MedicationActivity";
+    static final int ADD_MEDICATION_REQUEST = 1;
     EditText et;
     Button AddMedicationButton;
     RecyclerView lv;
     List<Medication> medicationList;
+    MedicationAdaptor adapter;
 
     protected DrawerLayout drawer;
 //    ArrayAdapter<String> adapter;
@@ -90,6 +93,7 @@ public class MedicationActivity extends MainActivity implements NavigationView.O
 
         Log.w(TAG,"Medications" + User.getMedications().size());
         MedicationAdaptor adapter = new MedicationAdaptor(this.getApplicationContext(), User.getMedications());
+        this.adapter = adapter;
         lv.setLayoutManager(layout);
         lv.setAdapter(adapter);
 
@@ -139,5 +143,14 @@ public class MedicationActivity extends MainActivity implements NavigationView.O
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == ADD_MEDICATION_REQUEST) {
+            this.adapter.notifyDataSetChanged();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -59,6 +59,8 @@ public class EditMedicationActivity extends AppCompatActivity {
                 deleteButton.setEnabled(false);
                 User.removeMedication(medID, EditMedicationActivity.this);
                 deleteButton.setEnabled(true);
+                Intent intent = new Intent(getApplicationContext(), MedicationActivity.class);
+                startActivity(intent);
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +86,8 @@ public class EditMedicationActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                     User.removeMedication(medID, EditMedicationActivity.this);
+                    Intent i = new Intent(getApplicationContext(), MedicationActivity.class);
+                    startActivity(i);
                 }
                 else {
                     saveButton.setEnabled(true);
