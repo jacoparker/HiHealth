@@ -60,7 +60,7 @@
             android:layout_marginStart="10dip"
             android:layout_marginEnd="63sp"
             android:gravity="center"
-            android:text="Total Pills:"
+            android:text="Total Uses:"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

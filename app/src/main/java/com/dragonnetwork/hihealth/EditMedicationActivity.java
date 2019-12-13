@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.dragonnetwork.hihealth.cloudio.CloudIO;
+import com.dragonnetwork.hihealth.data.Medication;
 import com.dragonnetwork.hihealth.data.User;
 import com.dragonnetwork.hihealth.medication.MedicationActivity;
 
@@ -102,12 +103,16 @@ public class EditMedicationActivity extends AppCompatActivity {
             && intent.hasExtra("totalPills") && intent.hasExtra("strength")
             && intent.hasExtra("frequency") && intent.hasExtra("icon"))
         {
-            prescriptionTextView.setText(intent.getStringExtra("prescription"));
-            totalPillsEditText.setText("" + intent.getIntExtra("totalPills",0));
-            strengthEditText.setText(intent.getStringExtra("strength"));
-            dosageEditText.setText("" + intent.getIntExtra("doses",0));
-            this.medID = intent.getStringExtra("medID");
-            switch (intent.getIntExtra("frequency",0)) {
+            String prescription = intent.getStringExtra("prescription");
+            int totalPills = intent.getIntExtra("totalPills",0);
+            String strength = intent.getStringExtra("strength");
+            int dosage = intent.getIntExtra("doses",0);
+            int frequency = intent.getIntExtra("frequency",0);
+            prescriptionTextView.setText(prescription);
+            totalPillsEditText.setText("" + totalPills);
+            strengthEditText.setText(strength);
+            dosageEditText.setText("" + dosage);
+            switch (frequency) {
                 case (1):
                     frequencyMorning.setChecked(true);
                     break;
@@ -149,6 +154,18 @@ public class EditMedicationActivity extends AppCompatActivity {
                 default:
                     rb = Icon.findViewById(R.id.pills_button);
                     rb.setChecked(true);
+            }
+
+            this.medID = intent.getStringExtra("medID");
+            if (this.medID == null) {
+                // get medID from the medications list
+                for (Medication m: User.getMedications()) {
+                    if (m.getDoses() == dosage && m.getTotalNum() == totalPills && m.getFrequency() == frequency
+                        && m.getPrescription().equals(prescription) && m.getStrength().equals(strength) && m.getIconType() == choice){
+                        this.medID = m.getMedID();
+                        break;
+                    }
+                }
             }
         }
     }
