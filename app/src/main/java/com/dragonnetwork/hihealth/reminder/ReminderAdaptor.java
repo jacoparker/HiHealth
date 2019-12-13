@@ -135,7 +135,7 @@ public class ReminderAdaptor extends
         //medInfo.setText(medStatus);
 
         ImageView icon = holder.icon;
-        switch(viewHolder) {
+        switch(rem.getType()) {
             case (R.id.syringe_button):
                 icon.setImageResource(R.drawable.syringe);
                 break;
@@ -145,7 +145,7 @@ public class ReminderAdaptor extends
             default:
                 icon.setImageResource(R.drawable.pills);
         }
-
+        /*
         final String name = med.getPrescription();
         final int doses = med.getDoses();
         final int numPills = med.getTotalNum();
@@ -167,7 +167,9 @@ public class ReminderAdaptor extends
                 intent.putExtra("medID", medID);
                 v.getContext().startActivity(intent);
             }
-        });
+        }
+        );
+        */
     }
 
     // Involves populating data into the item through holder
