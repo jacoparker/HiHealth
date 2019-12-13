@@ -138,13 +138,14 @@ public class EditMedicationActivity extends AppCompatActivity {
             int choice = intent.getIntExtra("icon",0);
             RadioButton rb;
             switch(choice) {
-                case (1):
+                case (R.id.syringe_button):
                     rb = Icon.findViewById(R.id.syringe_button);
                     rb.setChecked(true);
                     break;
-                case (2):
+                case (R.id.inhaler_button):
                     rb = Icon.findViewById(R.id.inhaler_button);
                     rb.setChecked(true);
+                    break;
                 default:
                     rb = Icon.findViewById(R.id.pills_button);
                     rb.setChecked(true);

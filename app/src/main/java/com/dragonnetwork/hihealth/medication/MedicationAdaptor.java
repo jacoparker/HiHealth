@@ -81,7 +81,7 @@ public class MedicationAdaptor extends
 
         // Set item views based on your views and data model
         TextView textView = viewHolder.medInfo;
-        textView.setText(med.getPrescription() + " - " + med.getStrength() + "/" + med.getTotalNum());
+        textView.setText(med.getPrescription() + " - " + med.getStrength() + ", " + med.getTotalNum() + " uses");
         TextView medInfo = viewHolder.medInstructions;
         int dose = med.getDoses();
         String medStatus;

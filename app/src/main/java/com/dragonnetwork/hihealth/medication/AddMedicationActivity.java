@@ -198,9 +198,6 @@ public class AddMedicationActivity extends AppCompatActivity {
             frequencyMorning.setError(null);
             frequencyAfternoon.setError(null);
         }
-
-     // w   Log.w(TAG,"valid = " + valid);
         return valid;
     }
-
-    }
+}
