@@ -89,7 +89,7 @@ public class MedicationActivity extends MainActivity implements NavigationView.O
           //                                  ,"freq"));
 
         Log.w(TAG,"Medications" + User.getMedications().size());
-        MedicationAdaptor adapter = new MedicationAdaptor(User.getMedications());
+        MedicationAdaptor adapter = new MedicationAdaptor(this.getApplicationContext(), User.getMedications());
         lv.setLayoutManager(layout);
         lv.setAdapter(adapter);
 

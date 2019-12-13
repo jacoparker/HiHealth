@@ -1,16 +1,18 @@
 package com.dragonnetwork.hihealth.medication;
 
 import android.content.Context;
-import android.media.Image;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dragonnetwork.hihealth.EditMedicationActivity;
 import com.dragonnetwork.hihealth.R;
 import com.dragonnetwork.hihealth.data.Medication;
 
@@ -24,8 +26,11 @@ public class MedicationAdaptor extends
 
     private List<Medication> medications;
 
+    public Context mContext;
+
     // Pass in the contact array into the constructor
-    public MedicationAdaptor(List<Medication> contacts) {
+    public MedicationAdaptor(Context mContext, List<Medication> contacts) {
+        this.mContext = mContext;
         medications = contacts;
     }
 
@@ -37,6 +42,7 @@ public class MedicationAdaptor extends
         public TextView medInfo;
         public TextView medInstructions;
         public ImageView icon;
+        public LinearLayout parentLayout;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -48,6 +54,7 @@ public class MedicationAdaptor extends
             medInfo = (TextView) itemView.findViewById(R.id.medication_info);
             medInstructions = (TextView) itemView.findViewById(R.id.medication_instructions);
             icon = (ImageView) itemView.findViewById(R.id.medication_icon);
+            parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
 
@@ -68,7 +75,7 @@ public class MedicationAdaptor extends
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(MedicationAdaptor.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final MedicationAdaptor.ViewHolder viewHolder, int position) {
         // Get the data model based on position
         Medication med = medications.get(position);
 
@@ -93,6 +100,27 @@ public class MedicationAdaptor extends
             default:
                 icon.setImageResource(R.drawable.pills);
         }
+
+        final String name = med.getPrescription();
+        final int doses = med.getDoses();
+        final int numPills = med.getTotalNum();
+        final String strength = med.getStrength();
+        final int frequency = med.getFrequency();
+        final int iconNum = med.getIconType();
+
+        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EditMedicationActivity.class);
+                intent.putExtra("prescription", name);
+                intent.putExtra("doses", doses);
+                intent.putExtra("totalPills", numPills);
+                intent.putExtra("strength", strength);
+                intent.putExtra("frequency", frequency);
+                intent.putExtra("icon", iconNum);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     // Returns the total count of items in the list

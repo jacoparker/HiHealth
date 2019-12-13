@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RecyclerView rv_morning = (RecyclerView) findViewById(R.id.rv_reminders);
 
         ArrayList<Medication> medications = createMedicationsList(6);
-        MedicationAdaptor adapter = new MedicationAdaptor(medications);
+        MedicationAdaptor adapter = new MedicationAdaptor(this.getApplicationContext() , medications);
         // Attach the adapter to the recyclerview to populate items
         rv_morning.setAdapter(adapter);
         // Set layout manager to position the items
