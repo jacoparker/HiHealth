@@ -22,7 +22,7 @@ import java.util.List;
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class ReminderAdaptor extends
-        RecyclerView.Adapter<com.dragonnetwork.hihealth.medication.MedicationAdaptor.ViewHolder> {
+        RecyclerView.Adapter<com.dragonnetwork.hihealth.reminder.ReminderAdaptor.ViewHolder> {
 
     private List<Reminder> reminders;
 
@@ -59,7 +59,7 @@ public class ReminderAdaptor extends
     }
 
     // Usually involves inflating a layout from XML and returning the holder
-    @Override
+    /*@Override
     @NonNull
     public com.dragonnetwork.hihealth.medication.MedicationAdaptor.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -71,20 +71,34 @@ public class ReminderAdaptor extends
         // Return a new holder instance
         com.dragonnetwork.hihealth.medication.MedicationAdaptor.ViewHolder viewHolder = new com.dragonnetwork.hihealth.medication.MedicationAdaptor.ViewHolder(medView);
         return viewHolder;
+    }*/
+
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        // Inflate the custom layout
+        View medView = inflater.inflate(R.layout.card_reminder, parent, false);
+
+        // Return a new holder instance
+        com.dragonnetwork.hihealth.reminder.ReminderAdaptor.ViewHolder viewHolder = new com.dragonnetwork.hihealth.reminder.ReminderAdaptor.ViewHolder(medView);
+        return viewHolder;
     }
 
-    // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(final com.dragonnetwork.hihealth.medication.MedicationAdaptor.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
         Reminder rem = reminders.get(position);
 
         // Set item views based on your views and data model
         TextView textView;
-        textView = viewHolder.remInfo;
+        textView = holder.remInfo;
         textView.setText(rem.getInfo() + " - " + rem.getInstructions());
         TextView remInfo;
-        remInfo = viewHolder.remInstructions;
+        remInfo = holder.remInstructions;
         /*
         int dose = med.getDoses();
 
@@ -120,7 +134,7 @@ public class ReminderAdaptor extends
          */
         //medInfo.setText(medStatus);
 
-        ImageView icon = viewHolder.icon;
+        ImageView icon = holder.icon;
         switch(viewHolder) {
             case (R.id.syringe_button):
                 icon.setImageResource(R.drawable.syringe);
@@ -155,6 +169,8 @@ public class ReminderAdaptor extends
             }
         });
     }
+
+    // Involves populating data into the item through holder
 
     // Returns the total count of items in the list
     @Override
