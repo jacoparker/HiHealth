@@ -22,7 +22,7 @@ import java.util.List;
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class ReminderAdaptor extends
-        RecyclerView.Adapter<com.dragonnetwork.hihealth.reminder.ReminderAdaptor.ViewHolder> {
+        RecyclerView.Adapter<ReminderAdaptor.ViewHolder> {
 
     private List<Reminder> reminders;
 
@@ -84,7 +84,7 @@ public class ReminderAdaptor extends
         View medView = inflater.inflate(R.layout.card_reminder, parent, false);
 
         // Return a new holder instance
-        com.dragonnetwork.hihealth.reminder.ReminderAdaptor.ViewHolder viewHolder = new com.dragonnetwork.hihealth.reminder.ReminderAdaptor.ViewHolder(medView);
+        ViewHolder viewHolder = new ViewHolder(medView);
         return viewHolder;
     }
 

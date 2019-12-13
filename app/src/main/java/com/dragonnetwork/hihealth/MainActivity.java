@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected NavigationView navigationView;
     final String TAG = "MainActivity";
     protected int contentView;
+    ReminderAdaptor adapter;
 
 
     @Override
@@ -76,13 +77,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        CloudIO.initCloud();
+        //CloudIO.initCloud();
         RecyclerView rv_morning = (RecyclerView) findViewById(R.id.rv_reminders);
 
         ArrayList<Medication> medications = createMedicationsList(6);
         //MedicationAdaptor adapter = new MedicationAdaptor(this.getApplicationContext() , medications);
         User.fetchReminders();
-        ReminderAdaptor adapter = new ReminderAdaptor(this.getApplicationContext(),User.getReminders());
+        adapter = new ReminderAdaptor(this.getApplicationContext(),User.getReminders());
         Log.w(TAG,"@@@@@@@@@Reminders: " + User.getReminders());
             // Attach the adapter to the recyclerview to populate items
         rv_morning.setAdapter(adapter);
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
         if(User.getMedicationIDs()!=null)
             User.fetchReminders();
-
+        adapter.notifyDataSetChanged();
     }
     protected void onCreateDrawer() {
         navigationView = findViewById(R.id.nav_view);
