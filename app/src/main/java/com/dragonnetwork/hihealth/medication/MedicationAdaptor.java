@@ -83,7 +83,12 @@ public class MedicationAdaptor extends
         TextView textView = viewHolder.medInfo;
         textView.setText(med.getPrescription() + " - " + med.getStrength() + "/" + med.getTotalNum());
         TextView medInfo = viewHolder.medInstructions;
-        String medStatus = "" + med.getDoses() + " doses";
+        int dose = med.getDoses();
+        String medStatus;
+        if (dose == 1)
+            medStatus = "" + dose + " dose";
+        else
+            medStatus = "" + dose + " doses";
         switch (med.getFrequency()) {
             case (1):
                 medStatus += " - morning";
