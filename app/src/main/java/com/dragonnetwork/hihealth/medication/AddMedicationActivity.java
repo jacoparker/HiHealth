@@ -73,6 +73,8 @@ public class AddMedicationActivity extends AppCompatActivity {
         Addbt = findViewById(R.id.Addbt);
         toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initProgressDialog();
 
@@ -143,6 +145,12 @@ public class AddMedicationActivity extends AppCompatActivity {
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Adding Medication...");
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     private boolean validateForm() {

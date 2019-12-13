@@ -38,6 +38,9 @@ public class EditMedicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_medication);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         saveButton = findViewById(R.id.button_save_changes);
         deleteButton = findViewById(R.id.button_delete_medication);
         prescriptionTextView = findViewById(R.id.medication_name_editText);
@@ -217,5 +220,11 @@ public class EditMedicationActivity extends AppCompatActivity {
 
         // w   Log.w(TAG,"valid = " + valid);
         return valid;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

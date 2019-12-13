@@ -15,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/title_activity_add_medication"
+        android:theme="@style/AppTheme.Dark"
         app:titleTextColor="@color/white" />
 
     <androidx.appcompat.widget.LinearLayoutCompat

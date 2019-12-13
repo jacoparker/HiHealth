@@ -146,6 +146,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:layout_marginTop="0dp"
+        android:theme="@style/AppTheme.Dark"
         app:title="@string/title_profile"
         app:titleTextColor="@color/white" />
 
