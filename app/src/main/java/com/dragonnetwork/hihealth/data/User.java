@@ -198,6 +198,7 @@ public class User {
     }
     public static void fetchReminders(){
         // Medication.frequency: 1-7 = 1+2+4;
+        Boolean morningflag = false, noonflag = false, nightflag = false;
         Timestamp timestamp = Timestamp.now();
         List<Medication> medications = getMedications();
         if(Reminders!=null) Reminders.clear();
@@ -222,19 +223,25 @@ public class User {
             duration=medication.getTotalNum()/medication.getDoses();
             if(frequency >= 4){
                 night.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),2,0));
-                Reminders.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),2,0));
+                nightflag = true;
                 frequency-=4;
             }
             if(frequency >= 2){
                 noon.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),1,0));
-                Reminders.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),1,0));
+                noonflag = true;
                 frequency-=2;
             }
             if(frequency >= 1){
                 morning.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),1,0));
-                Reminders.add(new Reminder(medication.getPrescription(),medication.getStrength()+" "+medication.getDoses(),1,0));
+                morningflag=true;
                 frequency-=1;
             }
+            if(morningflag)
+                Reminders.add(new Reminder(medication.getPrescription() + " - " +medication.getStrength() + ", " + medication.getTotalNum() + " uses","Morning - " + medication.getDoses() + " doses",1,0));
+            if(noonflag)
+                Reminders.add(new Reminder(medication.getPrescription() + " - " +medication.getStrength() + ", " + medication.getTotalNum() + " uses","Noon - " + medication.getDoses() + " doses",1,0));
+            if(nightflag)
+                Reminders.add(new Reminder(medication.getPrescription() + " - " +medication.getStrength() + ", " + medication.getTotalNum() + " uses","Night - " + medication.getDoses() + " doses",2,0));
         }
     }
 }

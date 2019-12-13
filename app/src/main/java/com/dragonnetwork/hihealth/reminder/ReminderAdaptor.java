@@ -96,9 +96,9 @@ public class ReminderAdaptor extends
         // Set item views based on your views and data model
         TextView textView;
         textView = holder.remInfo;
-        textView.setText(rem.getInfo() + " - " + rem.getInstructions());
-        TextView remInfo;
-        remInfo = holder.remInstructions;
+        textView.setText(rem.getInfo());
+        TextView remInfo = holder.remInstructions;
+        remInfo.setText(rem.getInstructions());
         /*
         int dose = med.getDoses();
 

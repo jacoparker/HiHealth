@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //MedicationAdaptor adapter = new MedicationAdaptor(this.getApplicationContext() , medications);
         User.fetchReminders();
         adapter = new ReminderAdaptor(this.getApplicationContext(),User.getReminders());
+        if(User.getMedicationIDs()!=null)
+            User.fetchReminders();
+        adapter.notifyDataSetChanged();
         Log.w(TAG,"@@@@@@@@@Reminders: " + User.getReminders());
             // Attach the adapter to the recyclerview to populate items
         rv_morning.setAdapter(adapter);
