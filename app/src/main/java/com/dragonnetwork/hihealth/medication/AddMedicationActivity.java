@@ -1,36 +1,22 @@
 package com.dragonnetwork.hihealth.medication;
 
 import android.app.ProgressDialog;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.dragonnetwork.hihealth.MainActivity;
 import com.dragonnetwork.hihealth.R;
-import com.dragonnetwork.hihealth.cloudio.CloudIO;
-import com.dragonnetwork.hihealth.data.Medication;
 import com.dragonnetwork.hihealth.data.User;
-
-import javax.annotation.Nullable;
 
 
 public class AddMedicationActivity extends AppCompatActivity {
