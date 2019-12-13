@@ -1094,6 +1094,8 @@ public class UIGeneralTest {
                         isDisplayed()));
         navigationMenuItemView3.perform(click());
         
+        // The app crashed here because I tried to access Reports page
+        // TODO: Fix this bug
         
     }
 
