@@ -109,15 +109,13 @@ public class AddMedicationActivity extends AppCompatActivity {
                                 Icon.getCheckedRadioButtonId());
                         progressDialog.dismiss();
                         Addbt.setEnabled(true);
-                        Intent intent = new Intent(getApplicationContext(), MedicationActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),MedicationActivity.class);
                         startActivity(intent);
-                        finish();
                     }
                     else {
                         progressDialog.dismiss();
                         Addbt.setEnabled(true);
                     }
-
                 }
             });
         }
@@ -203,9 +201,6 @@ public class AddMedicationActivity extends AppCompatActivity {
             frequencyMorning.setError(null);
             frequencyAfternoon.setError(null);
         }
-
-     // w   Log.w(TAG,"valid = " + valid);
         return valid;
     }
-
-    }
+}

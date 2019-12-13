@@ -314,7 +314,7 @@ public class AcceptanceTest {
 
         pressBack();
 
-  
+
 
         ViewInteraction linearLayout4 = onView(
                 allOf(childAtPosition(

@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.dragonnetwork.hihealth.cloudio.CloudIO;
+import com.dragonnetwork.hihealth.data.Medication;
 import com.dragonnetwork.hihealth.data.User;
 import com.dragonnetwork.hihealth.medication.MedicationActivity;
 
@@ -59,6 +60,8 @@ public class EditMedicationActivity extends AppCompatActivity {
                 deleteButton.setEnabled(false);
                 User.removeMedication(medID, EditMedicationActivity.this);
                 deleteButton.setEnabled(true);
+                Intent intent = new Intent(getApplicationContext(), MedicationActivity.class);
+                startActivity(intent);
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +87,8 @@ public class EditMedicationActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                     User.removeMedication(medID, EditMedicationActivity.this);
+                    Intent i = new Intent(getApplicationContext(), MedicationActivity.class);
+                    startActivity(i);
                 }
                 else {
                     saveButton.setEnabled(true);
@@ -98,12 +103,16 @@ public class EditMedicationActivity extends AppCompatActivity {
             && intent.hasExtra("totalPills") && intent.hasExtra("strength")
             && intent.hasExtra("frequency") && intent.hasExtra("icon"))
         {
-            prescriptionTextView.setText(intent.getStringExtra("prescription"));
-            totalPillsEditText.setText("" + intent.getIntExtra("totalPills",0));
-            strengthEditText.setText(intent.getStringExtra("strength"));
-            dosageEditText.setText("" + intent.getIntExtra("doses",0));
-            this.medID = intent.getStringExtra("medID");
-            switch (intent.getIntExtra("frequency",0)) {
+            String prescription = intent.getStringExtra("prescription");
+            int totalPills = intent.getIntExtra("totalPills",0);
+            String strength = intent.getStringExtra("strength");
+            int dosage = intent.getIntExtra("doses",0);
+            int frequency = intent.getIntExtra("frequency",0);
+            prescriptionTextView.setText(prescription);
+            totalPillsEditText.setText("" + totalPills);
+            strengthEditText.setText(strength);
+            dosageEditText.setText("" + dosage);
+            switch (frequency) {
                 case (1):
                     frequencyMorning.setChecked(true);
                     break;
@@ -134,16 +143,29 @@ public class EditMedicationActivity extends AppCompatActivity {
             int choice = intent.getIntExtra("icon",0);
             RadioButton rb;
             switch(choice) {
-                case (1):
+                case (R.id.syringe_button):
                     rb = Icon.findViewById(R.id.syringe_button);
                     rb.setChecked(true);
                     break;
-                case (2):
+                case (R.id.inhaler_button):
                     rb = Icon.findViewById(R.id.inhaler_button);
                     rb.setChecked(true);
+                    break;
                 default:
                     rb = Icon.findViewById(R.id.pills_button);
                     rb.setChecked(true);
+            }
+
+            this.medID = intent.getStringExtra("medID");
+            if (this.medID == null) {
+                // get medID from the medications list
+                for (Medication m: User.getMedications()) {
+                    if (m.getDoses() == dosage && m.getTotalNum() == totalPills && m.getFrequency() == frequency
+                        && m.getPrescription().equals(prescription) && m.getStrength().equals(strength) && m.getIconType() == choice){
+                        this.medID = m.getMedID();
+                        break;
+                    }
+                }
             }
         }
     }

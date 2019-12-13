@@ -133,8 +133,8 @@ public class LoginActivity extends AppCompatActivity {
 //                            if(User.isStatus())
 //                                onLoginSuccess();
 //                            else
-                        if (!User.isStatus())
-                                onLoginFailed();
+//                        if (!User.isStatus())
+//                                onLoginFailed();
                     }
                 }, 3000);
     }

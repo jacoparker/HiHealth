@@ -1,4 +1,4 @@
-package com.dragonnetwork.hihealth.user;
+package com.dragonnetwork.hihealth;
 
 
 import android.view.View;
@@ -12,6 +12,7 @@ import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.dragonnetwork.hihealth.R;
+import com.dragonnetwork.hihealth.user.LoginActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -971,6 +972,9 @@ public class UIGeneralTest {
                         isDisplayed()));
         navigationMenuItemView2.perform(click());
 
+        // The app crashed here because I tried to access symptopms page
+        // TODO: Fix this bug
+
         ViewInteraction appCompatEditText5 = onView(
                 allOf(withId(R.id.login_email),
                         childAtPosition(
@@ -1090,6 +1094,10 @@ public class UIGeneralTest {
                         3),
                         isDisplayed()));
         navigationMenuItemView3.perform(click());
+
+        // The app crashed here because I tried to access Reports page
+        // TODO: Fix this bug
+
     }
 
     private static Matcher<View> childAtPosition(
