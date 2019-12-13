@@ -26,3 +26,8 @@ Patients, especially those with chronic diseases, need to keep track of their me
 ## Testing
 
 Our tests are under Java/(androidTest)
+
+## Design
+
+Our designs are found in the wiki. All prototypes are located there; we do not share our PSD files.
+The prototypes were designed usin Adobe Photoshop.
