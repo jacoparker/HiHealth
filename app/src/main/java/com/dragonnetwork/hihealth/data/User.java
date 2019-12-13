@@ -198,6 +198,9 @@ public class User {
         // Medication.frequency: 1-7 = 1+2+4;
         Timestamp timestamp = Timestamp.now();
         List<Medication> medications = getMedications();
+        if(Reminders!=null) Reminders.clear();
+        else
+            Reminders=new ArrayList<>();
         if(morning!=null)
             morning.clear();
         else
