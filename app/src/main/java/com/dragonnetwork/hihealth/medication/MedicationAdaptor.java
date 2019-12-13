@@ -132,6 +132,7 @@ public class MedicationAdaptor extends
         final String strength = med.getStrength();
         final int frequency = med.getFrequency();
         final int iconNum = med.getIconType();
+        final String medID = med.getMedID();
 
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +144,7 @@ public class MedicationAdaptor extends
                 intent.putExtra("strength", strength);
                 intent.putExtra("frequency", frequency);
                 intent.putExtra("icon", iconNum);
+                intent.putExtra("medID", medID);
                 v.getContext().startActivity(intent);
             }
         });

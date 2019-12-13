@@ -1,5 +1,7 @@
 package com.dragonnetwork.hihealth.data;
 
+import android.app.Activity;
+
 import com.dragonnetwork.hihealth.cloudio.CloudIO;
 
 import java.sql.Timestamp;
@@ -152,6 +154,16 @@ public class User {
         Reports = null;
         Symptoms = null;
         CloudIO.SignOut();
+    }
+
+    public static void removeMedication(String medID, Activity context) {
+        CloudIO.removeMedication(medID, context);
+        for (Medication m: Medications) {
+            if (m.getMedID().equals(medID)) {
+                Medications.remove(m);
+                break;
+            }
+        }
     }
 
     public static void addMedication(String prescription, int totalnum, String strength, int doses, int frequency, int icontype){

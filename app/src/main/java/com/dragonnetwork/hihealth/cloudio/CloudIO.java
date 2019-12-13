@@ -3,6 +3,7 @@ package com.dragonnetwork.hihealth.cloudio;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -120,6 +121,30 @@ public class CloudIO {
         });
 
     }
+
+    public static void removeMedication(final String documentID, final Activity context) {
+        MedicationsDB.document(documentID).delete();
+        DocumentReference doc = UserDB.document(User.getUID());
+        doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task1) {
+                if (task1.isSuccessful()) {
+                    DocumentSnapshot UserDoc = task1.getResult();
+                    if (UserDoc.exists()) {
+                        List<String> l = (List<String>) UserDoc.get("MedicationIDs");
+                        l.remove(documentID);
+                        UserDB.document(User.getUID()).update("MedicationIDs", l).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(context, "Medications updated", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     public static void Login(String email, String password, final LoginActivity context){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
