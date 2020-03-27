@@ -1,6 +1,8 @@
 package com.dragonnetwork.hihealth.reminder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +27,24 @@ public class ReminderAdaptor extends
         RecyclerView.Adapter<ReminderAdaptor.ViewHolder> {
 
     private List<Reminder> reminders;
+    private OnItemClickListener mListener;
 
     public Context mContext;
+
+    int position = 0;
 
     // Pass in the contact array into the constructor
     public ReminderAdaptor(Context mContext, List<Reminder> contacts) {
         this.mContext = mContext;
         reminders = contacts;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     // Provide a direct reference to each of the views within a data item
@@ -43,10 +56,11 @@ public class ReminderAdaptor extends
         public TextView remInstructions;
         public ImageView icon;
         public LinearLayout parentLayout;
+        public LinearLayout highlightLayout;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, final OnItemClickListener listener) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
@@ -55,24 +69,21 @@ public class ReminderAdaptor extends
             remInstructions = (TextView) itemView.findViewById(R.id.medication_instructions);
             icon = (ImageView) itemView.findViewById(R.id.medication_icon);
             parentLayout = itemView.findViewById(R.id.parent_layout);
+            highlightLayout = itemView.findViewById(R.id.highlight_layout);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
     }
-
-    // Usually involves inflating a layout from XML and returning the holder
-    /*@Override
-    @NonNull
-    public com.dragonnetwork.hihealth.medication.MedicationAdaptor.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        // Inflate the custom layout
-        View medView = inflater.inflate(R.layout.card_reminder, parent, false);
-
-        // Return a new holder instance
-        com.dragonnetwork.hihealth.medication.MedicationAdaptor.ViewHolder viewHolder = new com.dragonnetwork.hihealth.medication.MedicationAdaptor.ViewHolder(medView);
-        return viewHolder;
-    }*/
-
 
     @NonNull
     @Override
@@ -84,7 +95,7 @@ public class ReminderAdaptor extends
         View medView = inflater.inflate(R.layout.card_reminder, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(medView);
+        ViewHolder viewHolder = new ViewHolder(medView, mListener);
         return viewHolder;
     }
 
@@ -99,40 +110,6 @@ public class ReminderAdaptor extends
         textView.setText(rem.getInfo());
         TextView remInfo = holder.remInstructions;
         remInfo.setText(rem.getInstructions());
-        /*
-        int dose = med.getDoses();
-
-        String medStatus;
-        if (dose == 1)
-            medStatus = "" + dose + " dose";
-        else
-            medStatus = "" + dose + " doses";
-        switch (med.getFrequency()) {
-            case (1):
-                medStatus += " - morning";
-                break;
-            case (2):
-                medStatus += " - afternoon";
-                break;
-            case (3):
-                medStatus += " - morning and afternoon";
-                break;
-            case (4):
-                medStatus += " - evening";
-                break;
-            case (5):
-                medStatus += " - morning and evening";
-                break;
-            case (6):
-                medStatus += " - afternoon and evening";
-                break;
-            case (7):
-                medStatus += " - morning, afternoon and evening";
-                break;
-        }
-
-         */
-        //medInfo.setText(medStatus);
 
         ImageView icon = holder.icon;
         switch(rem.getType()) {
@@ -145,31 +122,6 @@ public class ReminderAdaptor extends
             default:
                 icon.setImageResource(R.drawable.pills);
         }
-        /*
-        final String name = med.getPrescription();
-        final int doses = med.getDoses();
-        final int numPills = med.getTotalNum();
-        final String strength = med.getStrength();
-        final int frequency = med.getFrequency();
-        final int iconNum = med.getIconType();
-        final String medID = med.getMedID();
-
-        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, EditMedicationActivity.class);
-                intent.putExtra("prescription", name);
-                intent.putExtra("doses", doses);
-                intent.putExtra("totalPills", numPills);
-                intent.putExtra("strength", strength);
-                intent.putExtra("frequency", frequency);
-                intent.putExtra("icon", iconNum);
-                intent.putExtra("medID", medID);
-                v.getContext().startActivity(intent);
-            }
-        }
-        );
-        */
     }
 
     // Involves populating data into the item through holder
@@ -179,4 +131,12 @@ public class ReminderAdaptor extends
     public int getItemCount() {
         return reminders.size();
     }
+
+//    public void morningRVOnClick(View view) {
+//
+//        viewHolderListener.onIndexChanged(position);
+//        selectedPosition = getPosition();
+//        view.setBackgroundColor(Color.CYAN);
+//        selectedListItem = view;
+//    }
 }

@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Enter total number of uses"
+            android:hint="Enter total uses"
             android:inputType="number"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Enter strength (e.g. 25 mg)"
+            android:hint="Enter strength"
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -7,12 +7,14 @@ public class Reminder {
     private String Instructions;
     private int Time; // 0 - morning 1 - noon 2 - night
     private int Type;
+    private boolean taken;
 
     public Reminder(String info, String instructions, int time, int type) {
         Info = info;
         Instructions = instructions;
         Time = time;
         Type = type;
+        taken = false;
     }
     public String getInfo() {
         return Info;
@@ -45,4 +47,8 @@ public class Reminder {
     public void setType(int type) {
         Type = type;
     }
+
+    public void setTaken( ) { taken = !taken; }
+
+    public boolean getTaken( ) { return taken; }
 }

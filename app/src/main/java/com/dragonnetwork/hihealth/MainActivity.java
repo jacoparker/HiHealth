@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,18 +46,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected NavigationView navigationView;
     final String TAG = "MainActivity";
     protected int contentView;
+    int selected;
     ReminderAdaptor adapter;
-
+    Button markTakenBtn;
+    RecyclerView rv_morning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentView = R.id.nav_reminders;
         setContentView(R.layout.activity_main);
-//        LayoutInflater inflater = (LayoutInflater) this
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View contentView = inflater.inflate(R.layout.activity_main, null, false);
-//        drawer.addView(contentView);
+
+        markTakenBtn = findViewById(R.id.toggle_taken_btn);
+        selected = -1;
 
         // Attaching the layout to the toolbar object
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -78,12 +81,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //CloudIO.initCloud();
-        RecyclerView rv_morning = (RecyclerView) findViewById(R.id.rv_reminders);
+        rv_morning = (RecyclerView) findViewById(R.id.rv_reminders);
 
-        ArrayList<Medication> medications = createMedicationsList(6);
-        //MedicationAdaptor adapter = new MedicationAdaptor(this.getApplicationContext() , medications);
         User.fetchReminders();
         adapter = new ReminderAdaptor(this.getApplicationContext(),User.getReminders());
+        adapter.setOnItemClickListener(new ReminderAdaptor.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (selected != -1)
+                    ((ReminderAdaptor.ViewHolder)rv_morning.findViewHolderForAdapterPosition(selected)).
+                            parentLayout.setBackground(getDrawable(R.drawable.backgroundborder));
+                selected = position;
+                ReminderAdaptor.ViewHolder v = (ReminderAdaptor.ViewHolder)rv_morning.findViewHolderForAdapterPosition(position);
+                v.parentLayout.setBackground(getDrawable(R.drawable.backgroundbordergreen));
+            }
+        });
         if(User.getMedicationIDs()!=null)
             User.fetchReminders();
         adapter.notifyDataSetChanged();
@@ -108,6 +120,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
+    }
+
+    public void onTakenButtonClicked(View v) {
+        int i = selected;
+        if (i < 0) return;  // no item is selected.
+
+        // determine if the item selected is already marked taken
+        List<Reminder> reminders = User.getReminders();
+
+        ReminderAdaptor.ViewHolder sel = (ReminderAdaptor.ViewHolder)rv_morning.findViewHolderForAdapterPosition(i);
+
+        if (reminders.get(i).getTaken()) {
+            reminders.get(i).setTaken();
+            // set the correct icon
+            sel.icon.setImageResource(R.drawable.ic_check_white_24dp);
+            sel.icon.setBackgroundColor(Color.rgb(22, 194, 54));
+            // update the usage count
+
+        } else {
+            reminders.get(i).setTaken();
+            // set correct icon
+            sel.icon.setImageResource(R.drawable.pills);
+            sel.icon.setBackgroundColor(Color.rgb(255, 255, 255));
+            // update the usage count
+
+        }
     }
 
     @Override
@@ -161,19 +199,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-    }
-
-    /**
-     * Function just for testing... not useful in practice
-     * @param numMeds
-     * @return
-     */
-    ArrayList<Medication> createMedicationsList(int numMeds) {
-        ArrayList<Medication> list = new ArrayList<>();
-        for (int i=0; i<numMeds; i++) {
-            //Medication med = new Medication("Med" + i, i, i + " units", new Time(i, i, i));
-            //list.add(med);
-        }
-        return list;
     }
 }
